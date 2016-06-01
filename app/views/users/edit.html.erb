@@ -1,6 +1,38 @@
 <h1>Editing User</h1>
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-<%= render 'form' %>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+  <div class="field">
+    <label for="user_name">Name</label><br>
+    <input type="text" name="user[name]" id="user_name" value="<%= @user.name %>">
+  </div>
+  <div class="field">
+    <label for="user_last_name">Last name</label><br>
+    <input type="text" name="user[last_name]" id="user_last_name" value="<%= @user.last_name %>">
+  </div>
+  <div class="field">
+    <label for="user_birthdate">Birthdate</label><br>
+    <%= f.date_select :birthdate, start_year: 1900, end_year: 2016 %>
+  </div>
+  <div class="field">
+    <label for="user_gender">Gender</label><br>
+    <%= f.select :gender, options_for_select(User.genders.keys)%>
+  </div>
+  <div class="actions">
+    <input type="submit" name="commit" value="Edit User">
+  </div>
+<% end %>
+
+
+<a href="/users/<%= @user.id %>"> Show </a> |
+<a href="/users/"> Back </a>
