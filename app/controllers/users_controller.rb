@@ -61,6 +61,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def search
+    @user = User.find_by(dni: params[:search])
+    if @user
+      redirect_to @user
+    else
+      redirect_to users_path, notice: 'User not found'
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -69,6 +78,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :last_name, :birthdate, :gender)
+      params.require(:user).permit(:name, :last_name, :dni, :birthdate, :gender)
     end
 end
