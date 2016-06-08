@@ -8,24 +8,29 @@
       %ul
         - @user.errors.full_messages.each do |message|
           %li= message
-  .field
+  .form-group
     %label{:for => "user_name"} Name
-    %br
-      %input#user_name{:name => "user[name]", :type => "text", :value => @user.name}
-  .field
+    %input#user_name.form-control{:name => "user[name]", :type => "text", :value => @user.name}
+
+  .form-group
     %label{:for => "user_last_name"} Last name
-    %br
-      %input#user_last_name{:name => "user[last_name]", :type => "text", :value => @user.last_name}
-  .field
+    %input#user_last_name.form-control{:name => "user[last_name]", :type => "text", :value => @user.last_name}
+
+  .form-group
+    %label{:for => "user_dni"} DNI
+    %input#user_dni.form-control{:name => "user[dni]", :type => "text", :value => @user.dni}
+
+  .form-group
     %label{:for => "user_birthdate"} Birthdate
-    %br
-      = f.date_select :birthdate, start_year: 1900, end_year: 2016
-  .field
+    %input{:name => "user[birthdate]", :type => "date", :value => @user.birthdate}
+
+  .form-group
     %label{:for => "user_gender"} Gender
-    %br
-      = f.select :gender, options_for_select(User.genders.keys)
+    = f.select :gender, options_for_select(User.genders.keys), {}, {class: "form-control"}
+
   .actions
-    %input{:name => "commit", :type => "submit", :value => "Edit User"}
+    %input.btn.btn-block.btn-primary{:name => "commit", :type => "submit", :value => "Edit User"}
+
 %a{:href => "/users/#{@user.id}"} Show
 |
 %a{:href => "/users/"} Back
