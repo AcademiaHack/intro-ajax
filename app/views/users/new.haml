@@ -1,0 +1,29 @@
+%h1 New User
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    %label{:for => "user_name"} Name
+    %br
+      %input#user_name.form-control{:name => "user[name]", :type => "text", :value => @user.name}
+  .form-group
+    %label{:for => "user_last_name"} Last name
+    %br
+      %input#user_last_name.form-control{:name => "user[last_name]", :type => "text", :value => @user.last_name}
+  .form-group
+    %label{:for => "user_birthdate"} Birthdate
+    %br
+      %input{:name => "name[birthdate]", :type => "date", :value => ""}
+  .form-group
+    %label{:for => "user_gender"} Gender
+    %br
+      = f.select :gender, options_for_select(User.genders.keys), {}, {class: "form-control"}
+  .actions
+    %input.btn.btn-block.btn-primary{:name => "commit", :type => "submit", :value => "Create User"}
+%a.btn.btn-block.btn-warning{:href => "/users/"} Back

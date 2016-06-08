@@ -1,0 +1,18 @@
+%p#notice= notice
+.form-group
+  %p.form-control-static
+    %strong Name:
+    = @user.name
+.form-group
+  %p.form-control-static
+    %strong Last name:
+    = @user.last_name
+%p
+  %strong Birthdate:
+  = @user.birthdate
+%p
+  %strong Gender:
+  = @user.gender
+%a.btn.btn-success{:href => "/users/#{@user.id}/edit"} Edit
+|
+%a.btn.btn-warning{:href => "/users/"} Back
