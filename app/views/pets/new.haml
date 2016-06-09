@@ -1,0 +1,18 @@
+.row
+  .col-md-12
+    %legend
+      New Pet
+    = form_for [:user, @pet] do |f|
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control'
+      .form-group
+        = f.label :gender
+        = f.select :gender, options_for_select(Pet.genders.keys), {}, {class: "form-control"}
+      .form-group
+        -# = f.label :type
+        -# = f.select :type, options_for_select(Pet.types.keys), {}, {class: "form-control"}
+      .form-group
+        = f.label :diet
+        = f.select :diet, options_for_select(Pet.diets.keys), {}, {class: "form-control"}
+      = f.submit

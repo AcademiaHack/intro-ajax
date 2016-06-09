@@ -9,28 +9,33 @@
         - @user.errors.full_messages.each do |message|
           %li= message
   .form-group
-    %label{:for => "user_name"} Name
-    %input#user_name.form-control{:name => "user[name]", :type => "text", :value => @user.name}
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
 
   .form-group
-    %label{:for => "user_last_name"} Last name
-    %input#user_last_name.form-control{:name => "user[last_name]", :type => "text", :value => @user.last_name}
+    = f.label :last_name
+    = f.text_field :last_name, class: 'form-control'
 
   .form-group
-    %label{:for => "user_dni"} DNI
-    %input#user_dni.form-control{:name => "user[dni]", :type => "text", :value => @user.dni}
+    = f.label :dni, "DNI"
+    = f.number_field :dni, class: 'form-control'
 
   .form-group
-    %label{:for => "user_birthdate"} Birthdate
-    %input{:name => "user[birthdate]", :type => "date", :value => @user.birthdate}
+    = f.label :birthdate
+    = f.date_field :birthdate, class: 'form-control'
 
   .form-group
-    %label{:for => "user_gender"} Gender
-    = f.select :gender, options_for_select(User.genders.keys), {}, {class: "form-control"}
+    = f.label :gender
+    = f.select :gender, options_for_select(User.genders.keys), html_options: {class: "form-control"}
 
+    = f.fields_for :pets do |pet_form|
+      .form-group
+        = pet_form.label :name, 'Pet Name'
+        = pet_form.text_field :name, class: 'form-control'
+        = label_tag "destroy"
+        = pet_form.check_box :_destroy
   .actions
-    %input.btn.btn-block.btn-primary{:name => "commit", :type => "submit", :value => "Edit User"}
-
+    = f.submit class: 'btn btn-block btn-primary'
 %a{:href => "/users/#{@user.id}"} Show
 |
 %a{:href => "/users/"} Back

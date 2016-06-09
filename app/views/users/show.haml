@@ -19,6 +19,12 @@
   %p.form-control-static
     %strong Gender:
     = @user.gender
+%legend Pets
+.form-group
+  - @user.pets.each do |pet|
+    %label Name
+    %p.form-control-static
+      = pet.name
 %a.btn.btn-success{:href => "/users/#{@user.id}/edit"} Edit
 |
 %a.btn.btn-warning{:href => "/users/"} Back
