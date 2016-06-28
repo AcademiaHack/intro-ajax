@@ -1,0 +1,71 @@
+%h1 New User
+= form_for @user, authenticity_token: false do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |message|
+          %li= message
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :last_name
+    = f.text_field :last_name, class: 'form-control'
+
+  .form-group
+    = f.label :gender
+    = f.select :gender, options_for_select(User.genders.keys), html_options: {class: "form-control"}
+
+  .actions
+    = f.submit class: 'btn btn-block btn-primary'
+
+%h1 click Al boton!
+
+.btn.btn-success#boton click
+
+%table.table
+  %thead
+    %tr
+      %th User_ID
+      %th Name
+      %th Gender
+      %th Birthdate
+  %tbody
+
+:javascript
+    $('#new_user').on('submit', function(event){
+      event.preventDefault();
+      $.ajax('/users', {
+        method: 'POST',
+        //data: {
+        //"user": {
+          //"name": $('#user_name').val(),
+          //"last_name": $('#user_last_name').val()
+          //}
+        //}
+        data: $('#new_user').serialize(),
+        success: function(r){
+         $('#boton').click();
+        }
+      });
+    });
+
+
+    $('#boton').on("click",function(){
+      $.ajax('/users', {
+        success: function(response){
+          console.log(response);
+          $.each(response, function(index, user) {
+            $('tbody').append('<tr id='+index+'></tr>');
+            $('#'+index).append('<td>'+user.id +'</td>');
+            $('#'+index).append('<td>'+user.name +'</td>');
+            $('#'+index).append('<td>'+user.gender +'</td>');
+            $('#'+index).append('<td>'+user.birthdate +'</td>');
+          });
+        }
+      });
+    });
